@@ -1,0 +1,245 @@
+Build record: pdt-integral-generator-heights (assembled locally, 2026-11-16)
+
+About this record
+  It was kept while the package was assembled and revised on the author's machine, before the
+  repository was published, and the repository is published as a single commit. Where a block below
+  says "the previous commit" it means an earlier local revision. `./build.sh` is a local wrapper that
+  runs `lake build <target>` for one target at a time; it and the `logs/` directory it writes to are
+  not in the repository. The "reviews", "reads" and "rounds" of fixes named below are the AI-assisted
+  statement reviews and reads described in README.md ("Authorship, production and licence") and
+  formalization.yaml (review); their reports are not in the repository. The registry's own verification
+  workflow builds the repository independently from the public commit; its result is not part of this
+  record.
+
+Toolchain and dependencies
+  Lean: leanprover/lean4:v4.35.0-rc2 (lean-toolchain)
+  Mathlib: 065356127b1dc0016f66b7283ce0ce2c4055aa55, required in lakefile.toml with
+    git = "https://github.com/leanprover-community/mathlib4.git" (lake-manifest.json records the same
+    revision). The builds below used prebuilt dependency packages shared with another package at the
+    same pin; a build from a fresh clone with `lake exe cache get` was not run.
+  Machine: local machine, Apple silicon, macOS.
+
+Builds of the earlier six-statement Challenge (history; the builds of the current files are in the last
+two blocks), each `lake build <target>`, one Lean process at a time, 2026-11-16 UTC
+  HermiteCompositum   14:10:06  exit 0  Build completed successfully (8940 jobs)  13 warnings, all linter
+                                warnings in HermiteCompositum/Port014.lean (copied unchanged)
+  RulerSelection      14:10:11  exit 0  (8970 jobs)  756 warnings, all linter warnings in copied modules:
+                                RouteMBase 620, RouteMLink 63, T2 32, Port014 13, Kron 13, GramCert 11,
+                                Coords 2, RouteMCore 1, EnumProbe/PrunedSound 1
+  HeightT2            14:10:16  exit 0  (8982 jobs)  the same 756 replayed warnings; none in HeightT2/
+  Challenge           14:19:04  exit 0  (8932 jobs)  exactly 6 warnings, "declaration uses `sorry`", at
+                                Challenge.lean lines 670, 679, 688, 703, 713, 725 (the six placeholders; 672, 681, 690,
+                                705, 715, 727 after the docstring fixes, and 671, 680, 689, 704, 714,
+                                726 after the second docstring fixes, rebuilds below)
+  Solution            14:04:33  exit 0  (8975 jobs)  the same 756 replayed warnings; none in Solution.lean
+  DefinitionAudit     14:09:05  exit 0  (8932 jobs)  0 warnings
+  Axioms              14:09:43  exit 0  (8976 jobs)  no errors; the replayed warnings only
+  The library and Solution builds above replayed modules built earlier the same day; RulerSelection/
+  Perron.lean was rebuilt at 14:01:05 after the docstring change described below (exit 0), and the
+  modules importing it were rebuilt by the Solution build that followed.
+  After the review fixes to docstrings (Challenge.lean opening docstring, DefinitionAudit.lean,
+  Axioms.lean, four HeightT2/Instance files) each target was rebuilt, 2026-11-16 15:27-15:28 UTC:
+  HeightT2 (8982 jobs; the four Instance modules recompiled), HeightT2.Audit, Solution, Axioms,
+  DefinitionAudit, Challenge, all exit 0. Challenge: exactly the 6 `sorry` warnings, at lines 672,
+  681, 690, 705, 715, 727. Axioms: 34 lines, every one [propext, Classical.choice, Quot.sound].
+  HeightT2/Audit.lean and the review probes: 170 lines, all the same. DefinitionAudit: 26 lines,
+  as below. scripts/make_solution.py regenerated Solution.lean byte-identical.
+  After a second round of wording fixes (Challenge.lean opening docstring, two sentences; README.md,
+  formalization.yaml, BUILD.txt), 2026-11-16 15:40-15:42 UTC: scripts/make_solution.py regenerated
+  Solution.lean byte-identical (e8fa77a6...); Challenge, Solution, Axioms, DefinitionAudit rebuilt,
+  all exit 0. Challenge: exactly the 6 `sorry` warnings, at lines 671, 680, 689, 704, 714, 726.
+  Axioms: 34 lines, every one [propext, Classical.choice, Quot.sound]. DefinitionAudit: 26 lines,
+  0 warnings, as below.
+
+Axioms (as of the five-statement Challenge, 2026-11-16 16:57 UTC; see the last block)
+  lake build Axioms: 34 #print axioms lines (the five compared statements; the definitions
+    HeightT2.IsPerronNumber, HeightT2.t2Gram, HeightT2.t2GramRe, HermiteCompositum.Instance.L, .ρ, .Q;
+    23 supporting theorems and controls, among them the uncompared equality case
+    HeightT2.sum_norm_sq_eq_mulHeight₁_sq_add_iff). Every line: [propext, Classical.choice, Quot.sound].
+    'IntegralGeneratorHeights.t2Gram_compositum' depends on axioms: [propext, Classical.choice, Quot.sound]
+    'IntegralGeneratorHeights.coord_sq_le_sum_norm_sq' depends on axioms: [propext, Classical.choice, Quot.sound]
+    'IntegralGeneratorHeights.mulHeight₁_le_mulHeight₁_ρQ_iff' depends on axioms: [propext, Classical.choice, Quot.sound]
+    'IntegralGeneratorHeights.mahlerMeasure_generator_min' depends on axioms: [propext, Classical.choice, Quot.sound]
+    'IntegralGeneratorHeights.perronNumber_generator_selection' depends on axioms: [propext, Classical.choice, Quot.sound]
+  HeightT2/Audit.lean (built with HeightT2): 153 #print axioms lines, one per public declaration of
+    the HeightT2 modules, every one [propext, Classical.choice, Quot.sound]; the review probe files
+    print 17 further lines, all the same.
+  DefinitionAudit.lean prints its own 26 lines: 25 are [propext, Classical.choice, Quot.sound] and one
+    (DefinitionAudit.rootOfUnity_iff_isOfFinOrder) is [propext, Quot.sound].
+  No sorry outside the five placeholders of Challenge.lean; no native_decide, no axiom declaration,
+    no unsafe, implemented_by, opaque or @[extern] in any .lean file of the repository.
+
+Statement identity, Challenge vs Solution (5 theorems)
+  Solution.lean is generated from Challenge.lean by scripts/make_solution.py: it copies the text of
+    Challenge.lean from `set_option autoImplicit false` on and replaces each of the five placeholders
+    by one `exact`. The script asserts that restoring the placeholders gives the Challenge text back,
+    that the block between `-- BEGIN SHARED DEFINITIONS` and `-- END SHARED DEFINITIONS` equals the
+    same block of HermiteCompositum/Defs.lean byte for byte, and that each declaration of the block
+    between `-- BEGIN HEIGHT DEFINITIONS` and `-- END HEIGHT DEFINITIONS` occurs verbatim in
+    HeightT2/Defs.lean. Solution.lean does not repeat the definitions: it reaches the modules that
+    declare them (HermiteCompositum.Defs, HeightT2.Defs) through the proof modules it imports, and the Comparator checks that the
+    declarations reached from the statements are the same in both environments.
+  The carried field block is byte-identical to the block of the same name in the Challenge.lean of
+    stalex444/pdt-hermite-signature-compositum at 5aa870e98236ba240561b798265c629df8c2d031
+    (PALOMAR-2026-10-21-000012); the nine HermiteCompositum/*.lean files are byte-identical to the
+    files of the same names at that commit (cmp, 2026-11-16).
+  First Comparator run (14:02:14): "Const does not match between challenge and target
+    'HeightT2.IsPerronNumber'", with the height block placed after the field block. The height block
+    was moved ahead of the field block and wrapped in a section with `open Polynomial`, as in
+    HeightT2/Defs.lean; no statement or definition text changed. The run below then passed.
+
+Comparator (earlier six-statement Challenge; history; the run on the current files is in the last block)
+  lake comparator --inadvisably-no-sandbox (toolchain bin of v4.35.0-rc2, which contains leanexport,
+    lake comparator and nanoda_bin, first on PATH), from the package root, started 2026-11-16 15:41:52
+    UTC, after the second docstring fixes to Challenge.lean. Inputs:
+      19e7496e350afe4b9c77d563b482f7dc87e2887cd1618776604f5def78dc7b61  Challenge.lean
+      e8fa77a679d39f99c1d74a4dd8f1e384c12dae1fb24e62cf4434c951e653e956  Solution.lean
+      260f927e07faf2b50c5e10c6ce8e82b8912041fb9016af1c1d268b97d9fea538  comparator.json
+    Result: "nanoda kernel accepts the solution / Lean default kernel accepts the solution / Your
+    solution is okay!", exit 0, 190 s. Challenge.lean, Solution.lean and comparator.json changed
+    after that run (the five-statement Challenge); the run on the current files is in the last
+    block. The same command on the Challenge before the second docstring fixes
+    (sha256 f189a9aa4987eed4e0933087c287b2612231432f03d8f08f7a0eaf9ed3353d6f), started 15:28:34 UTC,
+    gave the same result, exit 0, 175 s; on the Challenge before the first docstring fixes (sha256
+    fdfdae843146d4f82b4707bd8131adea26a383001878ebb71f2b7296e6da8d35), started 14:04:38 UTC, gave the
+    same result, exit 0, 169 s.
+  Negative control (14:17), on the six-statement Challenge: with `- 1` changed to `- 2` in its
+    statement 1 (the equality case, since removed from the compared set) only, the
+    same command gave "error: Challenge and solution theorem statement do not match:
+    'IntegralGeneratorHeights.sum_norm_sq_eq_mulHeight₁_sq_add_iff'", exit 1, 87 s. Challenge.lean was
+    restored (sha256 fdfdae84..., the Challenge before the docstring fixes) and rebuilt.
+  Not run before publication: the registry's own submission workflow (there was no public commit when
+  this record was written); the Comparator inside
+    its bubblewrap sandbox (not available on macOS, hence --inadvisably-no-sandbox).
+
+Count and hygiene checks (2026-11-16, five-statement Challenge)
+  comparator.json theorem_names: 5. Challenge.lean: 5 `theorem` declarations outside the carried
+    field block (the block itself carries 27 `theorem` and 10 `lemma` declarations of PALOMAR-2026-10-21-000012), 5 placeholders,
+    opening docstring "compares exactly these five statements" with the five names in comparator order.
+    formalization.yaml alignment table: the same five names in the same order.
+  Challenge.lean imports Mathlib only; 728 lines, 35,969 bytes (the registry's limits are 1,000 lines
+    and 100 KiB; it is over both the 300-line and the 32 KiB marks above which the registry gives a mechanical warning).
+  Every .lean file begins with `module`. No docstring line in a file written for this entry begins
+    with theorem, lemma or def.
+
+RulerSelection/Perron.lean
+  This file differs from the author's earlier development only in two docstrings: the module
+  docstring and the docstring of `IsPerronAt` were rewritten to remove references to the author's
+  working records. No declaration, statement or proof changed.
+    7101059c7bdd2b35c7ae555bbf91e95cca23d1a687c02582152b4e80a2e32b75  (the development's file)
+    c2f3db1eeefb15b8c600a7192784ccc50b2ebba1919ee3ce7de4f967c7c3a855  RulerSelection/Perron.lean (this repository)
+  The other RulerSelection files are copied unchanged from the development.
+
+HeightT2 files changed after the statement reviews
+  After the four reviews, six HeightT2 files were edited: the reviews' wording corrections were
+  applied to docstrings (Bound.lean, Equality.lean, Instance/Box.lean); t2Gram and t2GramRe were
+  moved from Compositum.lean to Defs.lean with their bodies unchanged (now marked noncomputable); Audit.lean was regenerated.
+  No statement or proof changed (diff against copies of the reviewed files, kept outside the
+  repository at review time; their SHA-256 values are the "reviewed" column below).
+  reviewed -> shipped:
+    Defs.lean          3c876a30f74d56d1c8953a6287453a91cf27cb0bcf4a3bb858549e9c35112889 -> 652b5e771c496d9ad5578ac0ff57f7083f5518670b44c5cf42e7287bb2bdeffc
+    Compositum.lean    1dc032c82901164503bf96216b6f665bf8c659ff2b5649c65028a03f4236a6a7 -> 0801b47b25ff1be7b6eba1da66d84282d2606dd0434daff75d4b9f163b208782
+    Bound.lean         26ef2072b8db9c475dafd9e006d11a98d5e1ce3579c3fbf8f10c400dabdea5f8 -> 21abdbbdac4ad98580b23a63e8e49cff48c8989fafa996cc77da27d6b96bf8f0
+    Equality.lean      5b1e71a5f6c1d9b1b9902994698cbdbec0923478be40d275825bfc642b6699ee -> 513078d2566de9b74e5b8b0755213143257074c5e1b47003fab500bd538e585c
+    Instance/Box.lean  2bd835ec185524beb3faed7e876354e4e7c81423684033e45f6dfcecf27d74be -> e379429f361cae5f0cfefb62d1b15e52c778b41f0acbb6c56d3620c44912e4ac
+    Audit.lean         a8fa92e32f55eb21a4723e4dc8c8d73628dc5dd89342e35b39bf6806609fb10c -> 5e74525d9c71db0830aaba1b10e73486b3e0f7fc32ef5b93d158b9bd4f1bd54b
+  Instance/SmallHeight.lean, Instance/Generators.lean, Instance/EqualityL.lean and Instance/Box.lean
+  were then changed in one docstring line each (`ρ` and `Q` described as the adjoined roots); the
+  Box.lean hash above is after that change. No statement or proof changed. Every HeightT2 file as
+  committed (sha256):
+    5e74525d9c71db0830aaba1b10e73486b3e0f7fc32ef5b93d158b9bd4f1bd54b  HeightT2/Audit.lean
+    21abdbbdac4ad98580b23a63e8e49cff48c8989fafa996cc77da27d6b96bf8f0  HeightT2/Bound.lean
+    9ff607f51375ee59ac8bf8b3a5a3bde0df97e5f484ff27b2d0aceac44dc83bd7  HeightT2/Bridge.lean
+    0801b47b25ff1be7b6eba1da66d84282d2606dd0434daff75d4b9f163b208782  HeightT2/Compositum.lean
+    652b5e771c496d9ad5578ac0ff57f7083f5518670b44c5cf42e7287bb2bdeffc  HeightT2/Defs.lean
+    513078d2566de9b74e5b8b0755213143257074c5e1b47003fab500bd538e585c  HeightT2/Equality.lean
+    e379429f361cae5f0cfefb62d1b15e52c778b41f0acbb6c56d3620c44912e4ac  HeightT2/Instance/Box.lean
+    caa5b77cf763554bb2e161900f09974e30a45e10a6cf22c0a302c87500ae7dc8  HeightT2/Instance/EqualityL.lean
+    dbeadc6a8b3bd00e1eb0d58e436b06d8807ed44097077330947dcea603f7d65b  HeightT2/Instance/Generators.lean
+    6485efff2b6cddb86a194f5b6a36990747c4b2a3762ac6328bdf9de772f483e6  HeightT2/Instance/Perron.lean
+    f1bd4f8ecf552b7f63e37f6f163e548c05e188f109c6e8ee6a0aa2d1d47eeafd  HeightT2/Instance/SmallHeight.lean
+    6012485dacbfc2f473ed8a09733ec0bcd86d8d45944d8992243460d5ffa566a5  HeightT2/Probe.lean
+    b6daaecdb6e2a01a1979edf0bc378a972076ce5ff3e74139ba85f4574fa6e834  HeightT2/Review/BridgeProbes.lean
+    5868a639227cdc8fede6be7c9354534dfbc67bbc3bd1da5c57cfa0e17c28e787  HeightT2/Review/CompositumProbes.lean
+    8d333408c401160efc2235c3c589c6ec49a32e7d381e8a4c453dfb6e1d02c6bf  HeightT2/Review/EqualityProbes.lean
+    7bd7b83be60df9e1cb328705491a3d07dbe65324fdd7076bd5cc0eef95234ce7  HeightT2/Review/GeneratorsProbes.lean
+
+Metadata
+  formalization.yaml loads under the registry's contract (scripts.submission_contract of a local clone
+    of PalomarRegistry/PalomarSubmission, load_formalization_metadata and normalized_provenance, run
+    with python3.11 -I): result_origin "original".
+  MATHLIB_DEFINITIONS.md was generated by scripts/gen_mathlib_definitions.py from
+    scripts/mathlib_definitions_spec.json; every excerpt was byte-compared with raw.githubusercontent.com
+    at the pinned Mathlib revision (exit 0, 25 sections).
+
+Files (sha256): see SHA256SUMS (the Lean sources, comparator.json, lakefile.toml, lean-toolchain,
+  lake-manifest.json, the scripts). README.md, formalization.yaml, MATHLIB_DEFINITIONS.md, LICENSE,
+  .gitignore, .github/workflows/palomar-preflight.yml and this file are hashed at commit time; see git.
+
+Five compared statements, 2026-11-16 16:50-17:01 UTC
+  The equality case `sum_norm_sq_eq_mulHeight₁_sq_add_iff` was removed from the compared set; it
+    stays in the repository as HeightT2.sum_norm_sq_eq_mulHeight₁_sq_add_iff (HeightT2/Equality.lean,
+    unchanged) and is printed by Axioms.lean, which now imports HeightT2.Equality directly; Solution.lean
+    no longer imports it. Compared statements, renumbered: t2Gram_compositum (1),
+    coord_sq_le_sum_norm_sq (2), mulHeight₁_le_mulHeight₁_ρQ_iff (3), mahlerMeasure_generator_min (4),
+    perronNumber_generator_selection (5). Title, the Perron (Smyth) clause and the context paragraph of
+    the Challenge docstring changed; no other theorem statement, definition or proof changed; the
+    526-line field block is byte-identical (sha256 of the block 19c57acb... before and after).
+  Files changed: Challenge.lean, Solution.lean (regenerated), comparator.json, Axioms.lean,
+    DefinitionAudit.lean (docstring only), scripts/make_solution.py, scripts/mathlib_definitions_spec.json,
+    MATHLIB_DEFINITIONS.md (regenerated; comments only, all 25 excerpts byte-equal to GitHub at the
+    pin, exit 0), README.md, formalization.yaml, this file, SHA256SUMS. No HeightT2, RulerSelection or
+    HermiteCompositum file changed, so those libraries were not rebuilt.
+  scripts/make_solution.py: "Solution.lean written; 5 placeholders replaced; blocks checked".
+  Builds (./build.sh, one Lean process at a time, 76 GiB free):
+    Challenge        16:56:19  exit 0  (8932 jobs)  exactly 5 warnings, "declaration uses `sorry`", at
+                               Challenge.lean lines 674, 683, 698, 708, 720
+    Solution         16:56:52  exit 0  (8973 jobs)  756 replayed linter warnings; none in Solution.lean
+    Axioms           16:57:02  exit 0  (8976 jobs)  34 #print axioms lines, every one
+                               [propext, Classical.choice, Quot.sound]
+    DefinitionAudit  16:57:12  exit 0  (8932 jobs)  0 warnings; 26 lines, 25 [propext, Classical.choice,
+                               Quot.sound], rootOfUnity_iff_isOfFinOrder [propext, Quot.sound]
+  Comparator: lake comparator --inadvisably-no-sandbox (toolchain bin of v4.35.0-rc2 first on PATH),
+    started 16:57:31 UTC. Inputs:
+      43f6929b818a8bc0675f7e5f94fa931300178dc81d1d9af9addaa0d580f13c2a  Challenge.lean
+      57aab8a785a72497b74b995cd56e944c5513330a9d0d5ce91237af21a24c38a4  Solution.lean
+      26b9bf9790ebdf8ed05d5ca7064c98a8a8aae33377e8454197201c3a9efb596f  comparator.json
+    Result: "nanoda kernel accepts the solution / Lean default kernel accepts the solution / Your
+    solution is okay!", exit 0, 169 s; the export lists the five compared theorems.
+  Metadata: the contract loader (python3.11 -I, scripts.submission_contract) loads formalization.yaml,
+    result_origin "original"; formalization.yaml validates against the v0.4 schema (Draft7Validator,
+    0 errors; 17 sources, 8 related formalizations, 5 alignment rows).
+  Negative control: not re-run on the five-statement Challenge.
+
+Wording fixes after a further AI-assisted read, 2026-11-16 17:06-17:11 UTC
+  Two docstring/description edits from that read, defining n: Challenge.lean "Not claimed"
+    paragraph ("..., where `n = [K:ℚ]`, ...") and formalization.yaml project description ("... for x
+    in a number field of degree n, ..."). No theorem statement, definition or proof changed.
+  scripts/make_solution.py: "Solution.lean written; 5 placeholders replaced; blocks checked";
+    Solution.lean byte-identical to the previous commit.
+  Builds (./build.sh, one Lean process at a time, 76 GiB free):
+    Challenge        17:07:09  exit 0  (8932 jobs)  exactly 5 warnings, "declaration uses `sorry`", at
+                               Challenge.lean lines 674, 683, 698, 708, 720
+    Solution         17:07:31  exit 0  (8973 jobs)  756 replayed linter warnings; none in Solution.lean
+    Axioms           17:07:40  exit 0  (8976 jobs)  34 #print axioms lines, every one
+                               [propext, Classical.choice, Quot.sound]
+    DefinitionAudit  not rebuilt (imports neither Challenge nor Solution; unchanged).
+  Comparator: lake comparator --inadvisably-no-sandbox (toolchain bin of v4.35.0-rc2 first on PATH),
+    started 17:07:50 UTC. Inputs:
+      d8ca15f510f544ef0899d5365e9b2b2401cc9b986d411aab4333fb2718a422f1  Challenge.lean
+      57aab8a785a72497b74b995cd56e944c5513330a9d0d5ce91237af21a24c38a4  Solution.lean
+      26b9bf9790ebdf8ed05d5ca7064c98a8a8aae33377e8454197201c3a9efb596f  comparator.json
+    Result: "nanoda kernel accepts the solution / Lean default kernel accepts the solution / Your
+    solution is okay!", exit 0, 164 s.
+  After the last read (2026-11-16): one sentence of formalization.yaml (the Mathlib related-formalization
+  note now assigns Kronecker's theorem to the proof of the uncompared equality case) and the byte count of
+  Challenge.lean above were corrected. No Lean file changed; nothing was rebuilt.
+  Before publication (2026-11-16): the heading of this file and the section "About this record" were
+  written; block headings were reworded to mark the six-statement runs as history; one declaration name
+  in formalization.yaml was corrected (ρ_isIntegral_int); and one sentence of the Axioms.lean docstring
+  was corrected (it prints a selection of the uncompared theorems; every declaration of the HeightT2
+  library is printed in HeightT2/Audit.lean).
+  Axioms was rebuilt after the last change to its docstring, 18:49:43-18:50:03 UTC, exit 0: 34 `#print axioms` lines, every one
+  [propext, Classical.choice, Quot.sound]. Challenge.lean, Solution.lean and comparator.json did not
+  change, so the Comparator run above stands for the published files. SHA256SUMS was regenerated (the
+  Axioms.lean line).

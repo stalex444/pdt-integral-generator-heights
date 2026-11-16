@@ -1,0 +1,64 @@
+module
+
+import Mathlib
+import RulerSelection.ControlsB
+
+#print axioms RulerSelection.Kron.psd_of_form
+#print axioms RulerSelection.Kron.form_nonneg_of_psd
+#print axioms RulerSelection.Kron.kron_form_mono
+#print axioms RulerSelection.Kron.diagE_herm
+#print axioms RulerSelection.Kron.diagE_form
+#print axioms RulerSelection.Kron.diagE_kron_form
+#print axioms RulerSelection.Kron.kron_ge_diag
+#print axioms RulerSelection.Kron.kron_ge_diag_needs_t
+#print axioms RulerSelection.Kron.kron_ge_diag_needs_s
+#print axioms RulerSelection.Kron.S0_herm
+#print axioms RulerSelection.Kron.T0_herm
+#print axioms RulerSelection.Kron.Smat_herm
+#print axioms RulerSelection.Kron.Tmat_herm
+#print axioms RulerSelection.Kron.kron_lower_bound
+#print axioms RulerSelection.LaneB.vecOf_length
+#print axioms RulerSelection.LaneB.vecOf_getD
+#print axioms RulerSelection.LaneB.funOf_vecOf
+#print axioms RulerSelection.LaneB.vecOf_funOf
+#print axioms RulerSelection.LaneB.vecOf_injective
+#print axioms RulerSelection.LaneB.Sp_congr
+#print axioms RulerSelection.LaneB.Tp_congr
+#print axioms RulerSelection.LaneB.form_powC
+#print axioms RulerSelection.LaneB.qf_Nmat_eq
+#print axioms RulerSelection.LaneB.nmat_identity
+#print axioms RulerSelection.LaneB.Sp_diag0
+#print axioms RulerSelection.LaneB.Sp_diag1
+#print axioms RulerSelection.LaneB.Sp_diag2
+#print axioms RulerSelection.LaneB.Tp_diag0
+#print axioms RulerSelection.LaneB.Tp_diag1
+#print axioms RulerSelection.LaneB.Tp_diag2
+#print axioms RulerSelection.LaneB.Tp_diag3
+#print axioms RulerSelection.LaneB.Sp_herm
+#print axioms RulerSelection.LaneB.Tp_herm
+#print axioms RulerSelection.LaneB.Sp_diag
+#print axioms RulerSelection.LaneB.Tp_diag
+#print axioms RulerSelection.LaneB.sv_pos
+#print axioms RulerSelection.LaneB.tv_pos
+#print axioms RulerSelection.LaneB.svtv_ge
+#print axioms RulerSelection.LaneB.coord_sq_le
+#print axioms RulerSelection.LaneB.box_of_qf
+#print axioms RulerSelection.LaneB.mem_box_of
+#print axioms RulerSelection.LaneB.mem_box_iff
+#print axioms RulerSelection.LaneB.vecOf_mem_box
+#print axioms RulerSelection.LaneB.vecOf_mem_L12
+#print axioms RulerSelection.LaneB.small_height_in_L12
+#print axioms RulerSelection.LaneB.elemOf_vecOf
+#print axioms RulerSelection.LaneB.small_height_elemOf
+#print axioms RulerSelection.LaneB.L12_split
+#print axioms RulerSelection.LaneB.listed15_sub
+#print axioms RulerSelection.LaneB.rest56_sub
+#print axioms RulerSelection.LaneB.listed15_length
+#print axioms RulerSelection.LaneB.rest56_length
+#print axioms RulerSelection.LaneB.rest56_neg
+#print axioms RulerSelection.LaneB.listed_values
+#print axioms RulerSelection.LaneB.small_height_cases
+#print axioms RulerSelection.LaneB.box_hyp_sat
+#print axioms RulerSelection.LaneB.cut_excludes_two
+#print axioms RulerSelection.LaneB.small_height_hyp_sat
+#print axioms RulerSelection.LaneB.elemOf_e10

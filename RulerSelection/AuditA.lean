@@ -1,0 +1,70 @@
+module
+
+import Mathlib
+import RulerSelection.ControlsA
+import RulerSelection.HeightExtra
+
+#print axioms RulerSelection.Emb.φL_ρ
+#print axioms RulerSelection.Emb.φL_Q
+#print axioms RulerSelection.Emb.φL_injective
+#print axioms RulerSelection.Emb.card_emb
+#print axioms RulerSelection.Emb.φL_bijective
+#print axioms RulerSelection.Emb.embEquiv_apply
+#print axioms RulerSelection.Emb.embEquiv_ρ
+#print axioms RulerSelection.Emb.embEquiv_Q
+#print axioms RulerSelection.Emb.sum_emb
+#print axioms RulerSelection.Emb.prod_emb
+#print axioms RulerSelection.Emb.rhoR_spec
+#print axioms RulerSelection.Emb.QR_spec
+#print axioms RulerSelection.Emb.qN_spec
+#print axioms RulerSelection.Emb.rhoR_unique
+#print axioms RulerSelection.Emb.QR_unique
+#print axioms RulerSelection.Emb.qN_unique
+#print axioms RulerSelection.Emb.cubic_side_inst
+#print axioms RulerSelection.Emb.quartic_side_inst
+#print axioms RulerSelection.Emb.threshold_inst
+#print axioms RulerSelection.Emb.sum_norm_sq_tensor
+#print axioms RulerSelection.Emb.gram3
+#print axioms RulerSelection.Emb.gram4
+#print axioms RulerSelection.Emb.T2_coords
+#print axioms RulerSelection.Emb.T2_one
+#print axioms RulerSelection.Emb.T2_ρ
+#print axioms RulerSelection.Emb.T2_coords_ρ_check
+#print axioms RulerSelection.Emb.one_le_embHeight
+#print axioms RulerSelection.Emb.T2_le_embHeight_sq_add
+#print axioms RulerSelection.Emb.embHeight_ρQ
+#print axioms RulerSelection.Emb.embHeight_ρQ_sq_add_lt
+#print axioms RulerSelection.Emb.T2_lt_of_embHeight_le
+#print axioms RulerSelection.Emb.qf_lt_of_embHeight_le
+#print axioms RulerSelection.Emb.embHeight_one
+#print axioms RulerSelection.Emb.bL_coe_sum
+#print axioms RulerSelection.Emb.coords_exist
+#print axioms RulerSelection.Emb.coords_unique
+#print axioms RulerSelection.Emb.ρ_inv
+#print axioms RulerSelection.Emb.Q_inv
+#print axioms RulerSelection.Emb.ρ_pow_eq
+#print axioms RulerSelection.Emb.Q_pow_eq
+#print axioms RulerSelection.Emb.tU_eq
+#print axioms RulerSelection.Emb.tV_eq
+#print axioms RulerSelection.Emb.reexpand
+#print axioms RulerSelection.Emb.tens_coords
+#print axioms RulerSelection.Emb.pow_coords_of_tens
+#print axioms RulerSelection.Emb.tens_surjective
+#print axioms RulerSelection.Emb.tens_integral
+#print axioms RulerSelection.Emb.pu3_pw3
+#print axioms RulerSelection.Emb.pu4_pw4
+#print axioms RulerSelection.Emb.tensC_powC
+#print axioms RulerSelection.Emb.tens_coords_unique
+#print axioms RulerSelection.Emb.T2_tens
+#print axioms RulerSelection.Emb.height_le_imp
+#print axioms RulerSelection.Emb.embHeight_neg
+#print axioms RulerSelection.Emb.embHeight_inv_mul
+#print axioms RulerSelection.Emb.prod_norm_ρQ
+#print axioms RulerSelection.Emb.ρQ_ne_zero
+#print axioms RulerSelection.Emb.embHeight_ρQ_inv
+#print axioms RulerSelection.Emb.embHeight_neg_ρQ
+#print axioms RulerSelection.Emb.embHeight_neg_ρQ_inv
+#print axioms RulerSelection.Emb.height_le_imp_hyp_one
+#print axioms RulerSelection.Emb.T2_two
+#print axioms RulerSelection.Emb.T2_two_not_lt
+#print axioms RulerSelection.Emb.one_lt_embHeight_ρQ

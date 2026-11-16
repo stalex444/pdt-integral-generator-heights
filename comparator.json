@@ -1,0 +1,13 @@
+{
+  "challenge_module": "Challenge",
+  "solution_module": "Solution",
+  "theorem_names": [
+    "IntegralGeneratorHeights.t2Gram_compositum",
+    "IntegralGeneratorHeights.coord_sq_le_sum_norm_sq",
+    "IntegralGeneratorHeights.mulHeight₁_le_mulHeight₁_ρQ_iff",
+    "IntegralGeneratorHeights.mahlerMeasure_generator_min",
+    "IntegralGeneratorHeights.perronNumber_generator_selection"
+  ],
+  "permitted_axioms": ["propext", "Quot.sound", "Classical.choice"],
+  "enable_nanoda": true
+}

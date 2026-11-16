@@ -1,4 +1,4 @@
-# The integral generators of least Mahler measure of the field of x³ − x − 1 and x⁴ − x − 1, with the T₂ Gram matrix of a compositum
+# The integral generators of least Mahler measure of the field of x³ − x − 1 and x⁴ − x − 1
 
 Author: Stephanie Alexander (ORCID [0009-0003-7727-2565](https://orcid.org/0009-0003-7727-2565)).
 
@@ -8,11 +8,10 @@ that among the algebraic integers `x` of `L` with `ℚ(x) = L`, the Mahler measu
 polynomial is least exactly at `ρQ`, `−ρQ`, `(ρQ)⁻¹` and `−(ρQ)⁻¹`, so that Dubickas's invariant
 `M(O_L)` (the least Mahler measure of an integral generator) is `M(ρQ)`; that `ρQ` is the only one
 of the four that an embedding sends to a real Perron number; and that the nonzero algebraic
-integers of `L` of height at most the height of `ρQ` are exactly fourteen elements. A general fact
-about `T₂(x) = ∑_σ |σ x|²` in number fields is compared alongside: the `T₂` Gram matrix of a
-product family in a linearly disjoint compositum is a Kronecker product, with the coordinate bound
-it gives. It compares exactly five statements (those of
-`Challenge.lean`, which the registry's Comparator checks against `Solution.lean`).
+integers of `L` of height at most the height of `ρQ` are exactly fourteen elements. It compares
+exactly three statements, all about `L` (those of `Challenge.lean`, which the registry's Comparator
+checks against `Solution.lean`). General facts about `T₂(x) = ∑_σ |σ x|²` in number fields that
+the repository also proves are not compared; they are listed under "What is not claimed".
 
 ## The compared statements (namespace `IntegralGeneratorHeights`)
 
@@ -23,66 +22,74 @@ times the product over the finite places of `max(|x|_v, 1)`; it is the `[K:ℚ]`
 absolute Weil height, and for an algebraic integer it is `∏_σ max(1, |σ x|)`. For an algebraic
 integer `x`, `M(x)` is the Mahler measure of `minpoly ℤ x`.
 
-General statements:
-
-1. `t2Gram_compositum` — for subfields `K₁`, `K₂` of a number field `E`, linearly disjoint with
-   `K₁ ⊔ K₂ = E`, and families `b` in `K₁`, `c` in `K₂`: the `T₂` Gram matrix
-   `(∑_σ σ(b_i c_j)·conj σ(b_k c_l))` over the embeddings of `E` is the Kronecker product of the
-   `T₂` Gram matrices of `b` (over `K₁`) and of `c` (over `K₂`).
-2. `coord_sq_le_sum_norm_sq` — in that setting, with finite index sets: if `s, t ≥ 0` and
-   `Re G_b − s·E_ii` and `Re G_c − t·E_jj` are positive semidefinite, then every rational
-   coefficient vector `a` satisfies `s·t·a(i, j)² ≤ T₂(∑ a(k, l)·b_k·c_l)`.
-
-Statements about `L`:
-
-3. `mulHeight₁_le_mulHeight₁_ρQ_iff` — the nonzero algebraic integers `x` of `L` with
+1. `mulHeight₁_le_mulHeight₁_ρQ_iff` — the nonzero algebraic integers `x` of `L` with
    `H(x) ≤ H(ρQ)` are exactly `±1`, `±ρ^{±1}`, `±Q^{±1}`, `±(ρQ)^{±1}`.
-4. `mahlerMeasure_generator_min` — every algebraic integer `x` of `L` with `ℚ(x) = L` has
+2. `mahlerMeasure_generator_min` — every algebraic integer `x` of `L` with `ℚ(x) = L` has
    `M(ρQ) ≤ M(x)`, with equality exactly when `x ∈ {ρQ, −ρQ, (ρQ)⁻¹, −(ρQ)⁻¹}`.
-5. `perronNumber_generator_selection` — an algebraic integer `x` of `L` with `ℚ(x) = L`, of least
-   Mahler measure among the algebraic integers generating `L`, that some embedding sends to a real
-   Perron number, is `ρQ`. One direction only.
+3. `perronNumber_generator_selection` — let `x` be an algebraic integer of `L` with `ℚ(x) = L` such
+   that `M(x) ≤ M(y)` for every algebraic integer `y` of `L` with `ℚ(y) = L`, and such that `σ(x)`
+   is a real Perron number for some embedding `σ : L → ℂ`; then `x = ρQ`. One direction only: that
+   `ρQ` satisfies these hypotheses is proved in the repository
+   (`HeightT2.ρQ_perronNumber_generator_selected`) and not compared.
 
 Definitions. `Challenge.lean` imports Mathlib only. It carries, byte for byte, the definition block
 of the author's registered entry PALOMAR-2026-10-21-000012 (the field `L`, built as
-`K₃ = ℚ[X]/(X³ − X − 1)` and `L = K₃[Y]/(Y⁴ − Y − 1)`, and its elements `ρ`, `Q`), and three
-definitions of this entry, with the same text as `HeightT2/Defs.lean`:
+`K₃ = ℚ[X]/(X³ − X − 1)` and `L = K₃[Y]/(Y⁴ − Y − 1)`, and its elements `ρ`, `Q`), and one
+definition of this entry, with the same text as `HeightT2/Defs.lean`:
 `HeightT2.IsPerronNumber` (Lind's definition: a real algebraic integer `r ≥ 1` exceeding the
 modulus of every other root of its minimal polynomial; under it `1` is a Perron number; Smyth's
-survey (2008) requires instead exactly one conjugate of maximal modulus, a condition not used here;
-for an integral generator of `L`, replacing `r ≥ 1` by `r > 1` gives the same statement 5,
-`HeightT2.isPerronAt_iff_isPerronNumber`, not compared), `HeightT2.t2Gram` and its
-real part `HeightT2.t2GramRe`. `MATHLIB_DEFINITIONS.md` quotes the Mathlib definitions the
+survey (2008) requires instead exactly one conjugate of maximal modulus, a condition not used here
+(under it `−ρQ`, whose real image, of modulus about `1.617`, is its unique conjugate of largest
+modulus, the next being about `1.409`, would also qualify, and statement 3 would fail);
+for an integral generator of `L`, replacing `r ≥ 1` by `r > 1` gives the same statement 3,
+`HeightT2.isPerronAt_iff_isPerronNumber`, not compared). `MATHLIB_DEFINITIONS.md` quotes the Mathlib definitions the
 statements rest on, and `DefinitionAudit.lean` kernel-checks the facts this account relies on (for
 instance `H(2) = 2^{[K:ℚ]}` for every number field `K`, and the Perron controls `1`, `2`, `1 + √2`
 yes, `√2` no).
 
 ## The proofs
 
-1. The embeddings of `E` are the pairs of embeddings of `K₁` and `K₂`
-   (`HermiteCompositum.embeddingsEquiv`, from PALOMAR-2026-10-21-000012), so each entry of the Gram
-   matrix factors as a double sum. Controls: neither `K₁ ⊔ K₂ = ⊤` nor linear disjointness can be
-   dropped.
-2. `T₂(∑ a_p b_{p₁} c_{p₂}) = aᵀ (Re G_b ⊗ Re G_c) a` by statement 1 and the realness of the Gram
-   matrix; a Kronecker product of the two positive semidefinite certificates bounds the diagonal
-   entry (`RulerSelection.Kron.kron_ge_diag`, through Mathlib's `Matrix.PosSemidef.kronecker`).
-3. On `𝓞 L`, `H(x) = ∏_σ max(1, |σ x|)` (`HeightT2.mulHeight₁_eq_embHeight`). The copied library
-   bounds `T₂(x) ≤ H(x)² + 11 ≤ H(ρQ)² + 11 < 24.03`, turns this into a box for the integer
-   coordinates of `x` in a tensor basis of `𝓞 L`, and enumerates the box with a kernel-checked
-   certificate (`RulerSelection.LaneC.small_height_iff`).
-4. For an integral generator `x`, `M(minpoly x) = ∏_σ max(1, |σ x|)` (`RulerSelection.LaneC.mahler_eq_embHeight`);
-   among the fourteen elements of statement 3 only `±(ρQ)^{±1}` generate `L`. No unit hypothesis is
+1. On `𝓞 L`, `H(x) = ∏_σ max(1, |σ x|)` (`HeightT2.mulHeight₁_eq_embHeight`). The copied library
+   bounds `T₂(x) ≤ H(x)² + 11 ≤ H(ρQ)² + 11 < 24.03` (`RulerSelection.Emb.T2_le_embHeight_sq_add`,
+   the instance for `L` of the uncompared inequality below), writes `T₂` on `L` in coordinates from
+   the twelve embeddings of `L` (`RulerSelection.Emb.T2_coords`), turns the bound into a box for the
+   integer coordinates of `x` in a tensor basis of `𝓞 L` by the matrix lemma
+   `RulerSelection.Kron.kron_ge_diag` (through Mathlib's `Matrix.PosSemidef.kronecker`) applied to two
+   rational matrices (`RulerSelection.LaneB.box_of_qf`), and enumerates the box with a
+   kernel-checked certificate (`RulerSelection.LaneC.small_height_iff`).
+2. For an integral generator `x`, `M(minpoly x) = ∏_σ max(1, |σ x|)` (`RulerSelection.LaneC.mahler_eq_embHeight`);
+   among the fourteen elements of statement 1 only `±(ρQ)^{±1}` generate `L`. No unit hypothesis is
    made; the control `2ρQ` is a non-unit integral generator strictly above the minimum.
-5. Of the four minimisers, `−ρQ` has its conjugate of largest modulus at a negative real value and
+3. Of the four minimisers, `−ρQ` has its conjugate of largest modulus at a negative real value and
    `±(ρQ)⁻¹` have it at two complex-conjugate values, so only `ρQ` is Perron. The repository proves
    the selection for the predicate `IsPerronAt` (some real image above `1` beats every other image
    in modulus) and the equivalence of the two predicates on integral generators of `L`
    (`HeightT2.isPerronAt_iff_isPerronNumber`). Control: the Perron hypothesis cannot be dropped
    (`−ρQ`).
 
-The coordinate box of statement 3 is also re-derived through statement 2
-(`HeightT2.box_of_embHeight_le`, `HeightT2/Instance/Box.lean`); `HeightT2.box_routes_agree` records,
-by `rfl`, only that its statement is that of the box derived along the copied library's route
+All three proofs rest on the enumeration of step 1 (`RulerSelection.LaneC.small_height`). Its
+coordinate formula `RulerSelection.Emb.T2_coords` is proved from
+`RulerSelection.Emb.sum_norm_sq_tensor`, a Kronecker identity for sums over pairs of complex
+numbers, with the twelve embeddings of `L` indexed by pairs (`RulerSelection.Emb.sum_emb`): the
+content of the Gram identity for `L` and its power bases, proved directly. None of the proofs uses
+the uncompared theorems `HeightT2.t2Gram_compositum` or `HeightT2.coord_sq_le_sum_norm_sq` as
+stated: the modules where these and the inequality
+`T₂ ≤ H² + n − 1` are proved (`HeightT2.Compositum`, `HeightT2.Bound`, `HeightT2.Equality`) are not
+in the import closure of `Solution.lean`.
+
+**The Gram identity and the coordinate bound, proved and not compared.** The embeddings of `E` are
+the pairs of embeddings of `K₁` and `K₂` (`HermiteCompositum.embeddingsEquiv`, from
+PALOMAR-2026-10-21-000012), so each entry of the `T₂` Gram matrix of the product family
+`(i, j) ↦ b_i c_j` factors as a double sum: that matrix is the Kronecker product `G_b ⊗ G_c`
+(`HeightT2.t2Gram_compositum`; controls: neither `K₁ ⊔ K₂ = ⊤` nor linear disjointness can be
+dropped from it). With the realness of the Gram matrix, `T₂(∑ a_p b_{p₁} c_{p₂}) =
+aᵀ (Re G_b ⊗ Re G_c) a`, and `RulerSelection.Kron.kron_ge_diag` bounds the diagonal entry: if
+`s, t ≥ 0` and `Re G_b − s·E_ii`, `Re G_c − t·E_jj` are positive semidefinite (`E_ii` the diagonal
+matrix unit at `(i, i)`), then `s·t·a(i, j)² ≤ T₂(∑ a(k, l)·b_k·c_l)` for every rational `a`
+(`HeightT2.coord_sq_le_sum_norm_sq`). The coordinate box of statement 1 is re-derived through these
+two theorems (`HeightT2.box_of_embHeight_le`, `HeightT2.small_height_in_L12_via_compositum`,
+`HeightT2/Instance/Box.lean`); `HeightT2.box_routes_agree` records, by `rfl`, only that its
+statement is that of the box derived along the copied library's route
 (`HeightT2.box_of_embHeight_le_chain`).
 
 **The equality case, proved and not compared.** For a number field `K` of degree `n ≥ 2` and every
@@ -98,23 +105,42 @@ the literature".
 
 ## What is not claimed
 
-- Statements 3–5 are about `L` only; nothing is claimed for other fields.
-- The inequality `T₂(x) ≤ H(x)² + n − 1` is not this entry's. It is Lemma 6 of Dubickas (2023)
-  applied with `yσ = max(1, |σ x|)²`; it is proved in the repository and not compared. Lemma 6
-  states no case of equality.
-- The case of equality, `T₂(x) = H(x)² + (n − 1)` exactly when `x` is a root of unity (for
-  `n ≥ 2`), is proved in the repository (`HeightT2.sum_norm_sq_eq_mulHeight₁_sq_add_iff`) and is
-  not compared; no statement of it in print was located (where it was searched is listed below)
-  and novelty is not claimed.
-- That `ρQ` satisfies the hypotheses of statement 5 is proved in the repository
-  (`HeightT2.ρQ_perronNumber_generator_selected`) and not compared; that `ρQ` exceeds the modulus of
-  each of its other conjugates is statement 13 of the author's entry PALOMAR-2026-09-01-000005;
-  that `ρQ` is a Perron number follows from Lind's Prop. 1.
-- Statement 2 carries both sign hypotheses `0 ≤ s` and `0 ≤ t`. The repository's uncompared probe
-  `HeightT2.Review.coord_of_hs_only` proves the bound with `0 ≤ t` deleted (`0 ≤ s` kept), and
-  `HeightT2.control_coord_sq_le_needs_signs` shows that the two cannot both be dropped. Whether the
-  hypothesis `K₁ ⊔ K₂ = ⊤` is needed for the bound (it is needed for the identity of statement 1)
-  is not settled here.
+- Statements 1–3 are about `L` only; nothing is claimed for other fields.
+- The following are proved in the repository, are not compared, and are not claimed as this
+  entry's.
+  - (i) The inequality `T₂(x) ≤ H(x)² + n − 1` (`HeightT2.sum_norm_sq_le_mulHeight₁_sq_add`). It
+    is Lemma 6 of Dubickas (2023) applied with `yσ = max(1, |σ x|)²`. Lemma 6 states no case of
+    equality.
+  - (ii) The case of equality, `T₂(x) = H(x)² + (n − 1)` exactly when `x` is a root of unity (for
+    `n ≥ 2`) (`HeightT2.sum_norm_sq_eq_mulHeight₁_sq_add_iff`). No statement of it in print was
+    located (where it was searched is listed below) and novelty is not claimed.
+  - (iii) The identity that, for linearly disjoint `K₁`, `K₂` with `K₁ ⊔ K₂ = E`, the `T₂` Gram
+    matrix of the product family `(i, j) ↦ b_i c_j` is the Kronecker product of the `T₂` Gram
+    matrices of `b` and `c` (`HeightT2.t2Gram_compositum`). Special cases are in print (listed
+    under "Relation to the literature") and novelty is not claimed. It is the Hermitian (`T₂`)
+    counterpart of the trace-form identity of the author's entry PALOMAR-2026-09-02-000014
+    (statement 3 there); on a totally real field every embedding is real, the `T₂` Gram matrix is
+    the trace Gram matrix, and there, for bases, the identity is that trace-form identity.
+  - (iv) The coordinate bound `HeightT2.coord_sq_le_sum_norm_sq` (stated in "The proofs" above).
+    For families that are bases it is the bound (2.9) of Fincke and Pohst (1985) applied to the
+    Kronecker product of the two Gram matrices; it also covers singular Gram matrices. Novelty is
+    not claimed. It carries both sign hypotheses `0 ≤ s` and `0 ≤ t`. The repository's uncompared
+    probe `HeightT2.Review.coord_of_hs_only` proves the bound with `0 ≤ t` deleted (`0 ≤ s` kept),
+    and `HeightT2.control_coord_sq_le_needs_signs` shows that the two cannot both be dropped;
+    linear disjointness cannot be dropped (`HeightT2.control_coord_sq_le_needs_linearDisjoint`).
+    The hypothesis `K₁ ⊔ K₂ = ⊤` (needed for the Gram identity) can be removed from the bound by
+    an argument not formalized here: in `F = K₁ ⊔ K₂`, where `K₁`, `K₂` are still linearly
+    disjoint with join `F`, the bound holds with `T₂` taken in `F`, and each embedding of `F`
+    extends to exactly `[E:F]` embeddings of `E`, so `T₂` in `E` is `[E:F]` times `T₂` in `F`.
+    The theorem keeps the hypothesis.
+  - (v) That `ρQ` satisfies the hypotheses of statement 3
+    (`HeightT2.ρQ_perronNumber_generator_selected`); that `ρQ` exceeds the modulus of each of its
+    other conjugates is statement 13 of the author's entry PALOMAR-2026-09-01-000005; that `ρQ` is
+    a Perron number follows from Lind's Prop. 1.
+- How the compared proofs use (i)–(iv) is under "The proofs": they use the instance of (i) for
+  `L` in the copied library and a direct proof of the content of (iii) for `L` and its power bases
+  (`RulerSelection.Emb.T2_coords`); they use neither (ii) nor the theorems (iii) and (iv) as
+  stated; (iv) is proved from the matrix lemma `RulerSelection.Kron.kron_ge_diag` that they use.
 - Only Mathlib's relative height is used; the absolute Weil height is not stated.
 - No statement concerns a physical model.
 
@@ -125,17 +151,23 @@ Iberoam. 39 (2023), 269–282 ([doi](https://doi.org/10.4171/RMI/1331); full tex
 `M(O_K) = inf{M(α) : α ∈ O_K, ℚ(α) = K}` and compares it with the discriminant, in connection with
 Ruppert's question on small generators of number fields (Ruppert, Manuscripta Math. 96 (1998);
 not opened); Vaaler and Widmer answer related questions (Contemp. Math. 587 (2013); Math. Proc.
-Cambridge Philos. Soc. 159 (2015); abstracts opened). Statement 4, with the uncompared `HeightT2.control_generator_attained`, determines `M(O_L)` and the
+Cambridge Philos. Soc. 159 (2015); abstracts opened). Statement 2, with the uncompared `HeightT2.control_generator_attained`, determines `M(O_L)` and the
 generators attaining it. Bounds for the least Mahler measure of a generator in terms of the discriminant are in print for
 real quadratic fields (Cochrane et al., Exp. Math. 25 (2016)) and for infinitely many cubic fields
 (Eldredge and Petersen, Int. J. Number Theory 18 (2022)), both not opened and as Dubickas (2023)
 describes them; quartic Galois fields are treated by Paudel, Petersen and Wang, Illinois J. Math. 70
-(2026) (abstract read). A related algorithmic
+(2026) (abstract and introduction read, arXiv:2510.00295). These works bound `M(O_K)` in terms of
+the discriminant for families of fields: of degree 2, 3 and 4 in the three papers just named, and
+of every degree `d ≥ 2` in Dubickas (2023), Theorem 2. An exact value of `M(O_K)` for an individual
+field of degree above 4 was not found in what was read: the full text of Dubickas (2023) and the
+abstract and introduction of Paudel, Petersen and Wang; Cochrane et al. and Eldredge and Petersen
+were not opened. A related algorithmic
 problem in print is the smallest Pisot unit generating a field (Vávra and Veneziano, J. Symbolic
-Comput. 89 (2018); abstract opened); `ρQ` is not a Pisot number.
+Comput. 89 (2018); abstract opened); `ρQ` is not a Pisot number: its conjugate `ρ·z`, with `z` a
+non-real root of `x⁴ − x − 1`, has modulus about `1.41 > 1`.
 
-**The equality case (not compared), searched and not found.** Neither the squared inequality `T₂(x) ≤ H(x)² + n − 1`
-nor its case of equality was found stated in the sources searched. Full text opened and searched: Dubickas 2023
+**The equality case (not compared), searched and not found.** The inequality `T₂(x) ≤ H(x)² + n − 1` is Lemma 6 of Dubickas (2023) applied as above; its case of
+equality was not found stated in the sources searched. Full text opened and searched: Dubickas 2023
 (including a search of the text for equality, root of unity, Kronecker and reciprocal); Smyth,
 "The Mahler measure of algebraic numbers: a survey" (2008; arXiv:math/0701397); Smyth, "Seventy
 years of Salem numbers", Bull. LMS 47 (2015) (arXiv v3; pp. 1–2 and the reference list read); Boyd, Canad. Math. Bull. 30 (1987).
@@ -144,25 +176,59 @@ Math. 127 (2026). Searches: 14 queries of the arXiv API, 4 of OpenAlex, 8 of the
 Math.SE APIs. Not opened: Cohen, GTM 138; Pohst and Zassenhaus; Martinet (1978); Bombieri and
 Gubler, chapter 1; Schinzel's book; Salem (1963). A hit would have been an equation
 `∑|σα|² = M(α)^{2n/deg α} + n − 1` (or `T₂ = H² + n − 1`) characterizing roots of unity. The two
-deciding steps are published: Kronecker's theorem (J. Reine Angew. Math. 53 (1857); not opened,
-used through Mathlib) and the reciprocity step of Salem's lemma (Salem, *Algebraic Numbers and
+deciding steps are published: Kronecker's theorem (J. Reine Angew. Math. 53 (1857), theorem I on p. 173: if the roots of a monic
+integer equation are all non-real of modulus 1, they are roots of unity; opened, scan at Zenodo record 2258989; used through Mathlib) and the reciprocity step of Salem's lemma (Salem, *Algebraic Numbers and
 Fourier Analysis*, 1963, p. 26, not opened; restated with proof in Smyth 2015, Lemma 1, opened).
 
-**Statements 1 and 2.** No published statement of the Kronecker identity for the `T₂` Gram matrix
-of a compositum was located (web searches for compositum, linearly disjoint, tensor product with
-Minkowski or `T₂`); it follows in one line from the description of the embeddings of a compositum.
-Work on tensor products of positive definite quadratic forms and of Hermitian lattices (Kitaoka,
+**The Gram identity and the coordinate bound (neither compared).** Special cases of the uncompared identity
+`HeightT2.t2Gram_compositum` are in print:
+
+- Popov and Zarhin, "Root lattices in number fields", Bull. Math. Sci. 11 (2021), no. 3, 2050021
+  ([doi](https://doi.org/10.1142/S1664360720500216); opened as arXiv:2002.04641v3), Lemma 8(iii):
+  for coprime `i`, `j`, the multiplication map `O_i ⊗_ℤ O_j → O` of the `i`-th, `j`-th and
+  `ij`-th cyclotomic fields is a lattice isometry for the forms `Tr(x·θ(y))`, `θ` complex
+  conjugation. On these fields `σ(θ(y)) = conj σ(y)` for every embedding `σ`, so the form is
+  `∑_σ σ(x)·conj σ(y)`, the `T₂` form; the lemma is the identity for coprime cyclotomic fields and
+  integral bases.
+- Lyubashevsky, Peikert and Regev, "A toolkit for Ring-LWE cryptography", Eurocrypt 2013, Lecture
+  Notes in Comput. Sci., pp. 35–54 ([doi](https://doi.org/10.1007/978-3-642-38348-9_3); opened as
+  the full version dated May 16, 2013, from an author's web page), §2.5.2, eq. (2.6): for
+  `ℚ(ζ_m) ≅ ⊗_ℓ ℚ(ζ_{m_ℓ})`, the `m_ℓ` the prime-power factors of `m`, the canonical embedding is
+  the tensor product of the factors' canonical embeddings, and §4.1 (p. 25) applies this to the
+  powerful basis, the tensor product of the factors' power bases, whose embedding matrix `CRT_m` has
+  the tensor structure used on p. 26. The Kronecker form of the `T₂` Gram matrix of a tensor family
+  follows from it; the paper does not state the Gram identity.
+- Bayer-Fluckiger, Oggier and Viterbo, "New algebraic constructions of rotated `ℤⁿ`-lattice
+  constellations for the Rayleigh fading channel", IEEE Trans. Inf. Theory 50 (2004), no. 4,
+  702–714 ([doi](https://doi.org/10.1109/TIT.2004.825045); opened as an authors' copy, through
+  the Internet Archive), Prop. 6 (p. 711): for a compositum of Galois fields with coprime
+  discriminants, if each factor's form `Tr(α_j x y)` is isomorphic to the unit form, so is the
+  corresponding form of the compositum; the proof factors the trace on products of integral bases
+  of the factors, and the text after it notes that the generator matrix is the tensor product of
+  the factors' matrices. The paper treats totally real fields (p. 704), where the trace Gram
+  matrix is the `T₂` Gram matrix.
+
+The repository's identity is the same identity for any linearly disjoint `K₁`, `K₂` with
+`K₁ ⊔ K₂ = E` and any families; no statement in that generality was located in the sources
+searched (web searches for compositum, linearly disjoint, tensor product with Minkowski or `T₂`, and
+the three papers above); it follows in one line from the description of the embeddings of a
+compositum. No published statement of the coordinate bound `HeightT2.coord_sq_le_sum_norm_sq` in this
+form was located. For families that are bases, so that `G_b` and `G_c` are invertible, the largest
+admissible `s` and `t` are `1/(G_b⁻¹)_ii` and `1/(G_c⁻¹)_jj`, and the bound is then the classical
+coordinate bound `x_i² ≤ (A⁻¹)_ii · xᵀAx` for a positive definite form `A` (Fincke and Pohst, Math.
+Comp. 44 (1985), (2.9)) applied to `G_b ⊗ G_c`, whose inverse is `G_b⁻¹ ⊗ G_c⁻¹`; it also covers
+singular Gram matrices. Novelty is not claimed for either. Work on tensor products of positive definite quadratic forms and of Hermitian lattices (Kitaoka,
 Nagoya Math. J. 70 (1978); Coulangeon, Acta Arith. 92 (2000)) was located by bibliographic record
 only and not opened. The trace-form analogue is statement 3 of the author's entry
 PALOMAR-2026-09-02-000014 (below).
 
 **Perron numbers.** Lind, Ergodic Theory Dynam. Systems 4 (1984), 283–300: the definition (p. 283),
-`1` counts (p. 285), closure under sums and products (Prop. 1, p. 292). These are from a reading
-made earlier in the author's project; the paper was not re-opened for this entry.
+`1` counts (p. 285), closure under sums and products (Prop. 1, p. 292); publisher PDF opened for this entry.
 
-**The finite search of statement 3** bounds integer coordinates through the positive definite form
-`T₂` and enumerates a box; Fincke and Pohst, Math. Comp. 44 (1985) (not opened), is the standard
-reference for such enumerations. Computing the elements of bounded height in a number field also has
+**The finite search of statement 1** bounds integer coordinates through the positive definite form
+`T₂` and enumerates a box; Fincke and Pohst, Math. Comp. 44 (1985) (opened), is the standard
+reference for such enumerations; for product families of bases, its coordinate bound (2.9) is the
+bound that the uncompared `HeightT2.coord_sq_le_sum_norm_sq` gives (above). Computing the elements of bounded height in a number field also has
 a published algorithm by another route: Doyle and Krumm, "Computing algebraic numbers of bounded
 height", Math. Comp. 84 (2015), 2867–2891 (opened, arXiv:1111.4963), who compare with Pethő and
 Schmitt, Period. Math. Hungar. 43 (2002), 31–41 (not opened).
@@ -176,18 +242,22 @@ and are credited here.
 
 | Library (commit) | Declarations (file:line) | Relation |
 |---|---|---|
-| rwst/Subspace-Theorems `d12aa25a9725e8d28c1bfc018c664b7ceb8d35c5` (the library of PALOMAR-2026-09-25-000022) | `NumberField.mulHeight₁_eq_of_mem_integer` (ArithmeticHeights/SUnit.lean:185), `mulHeight₁_eq_iff_mem_integer` (:260), `NumberField.Units.mulHeight₁_eq_prod_infinitePlace` (ArithmeticHeights/UnitHeight.lean:120), `NumberField.absMulHeight₁_pow_natDegree` (ArithmeticHeights/MahlerMeasure.lean:373), `NumberField.absMulHeight₁_pow_finrank` (ArithmeticHeights/Extension.lean:283), `NumberField.absMulHeight₁_eq_one_iff` (ArithmeticHeights/Kronecker.lean:94) | More general forms of this repository's uncompared bridges: the height of an algebraic integer as a product over infinite places, and its passage to complex embeddings (the private lemma `prod_embeddings_eq`, ArithmeticHeights/Extension.lean:89, the same argument as the repository's `HeightT2.prod_infinitePlace_eq_prod_embeddings`, used for `HeightT2.mulHeight₁_eq_prod_embeddings`); and Mahler measure = height for any algebraic number (the repository's `RulerSelection.LaneC.mahler_eq_embHeight` is the special case of an integral generator of `L`). Nothing there matches a compared statement. |
+| rwst/Subspace-Theorems `d12aa25a9725e8d28c1bfc018c664b7ceb8d35c5` (the library of PALOMAR-2026-09-25-000022; the head `2fc7bea12d398fbc8ea758ecb8516efe8e3ef33d` was also searched on 2026-11-16, with no further match) | `NumberField.mulHeight₁_eq_of_mem_integer` (ArithmeticHeights/SUnit.lean:185), `mulHeight₁_eq_iff_mem_integer` (:260), `NumberField.Units.mulHeight₁_eq_prod_infinitePlace` (ArithmeticHeights/UnitHeight.lean:120), `NumberField.absMulHeight₁_pow_natDegree` (ArithmeticHeights/MahlerMeasure.lean:373), `NumberField.absMulHeight₁_pow_finrank` (ArithmeticHeights/Extension.lean:283), `NumberField.absMulHeight₁_eq_one_iff` (ArithmeticHeights/Kronecker.lean:94) | More general forms of this repository's uncompared bridges: the height of an algebraic integer as a product over infinite places, and its passage to complex embeddings (the private lemma `prod_embeddings_eq`, ArithmeticHeights/Extension.lean:89, the same argument as the repository's `HeightT2.prod_infinitePlace_eq_prod_embeddings`, used for `HeightT2.mulHeight₁_eq_prod_embeddings`); and Mahler measure = height for any algebraic number (the repository's `RulerSelection.LaneC.mahler_eq_embHeight` is the special case of an integral generator of `L`). Nothing there matches a compared statement. |
 | TauCetiProject/TauCeti `086028a6d8d186715b52fac7f3e7b23175ed2dc9` | `NumberField.mulHeight₁_eq_of_mem_integer` (TauCeti/NumberTheory/Height/SInteger.lean:77; adapted from Subspace-Theorems), `TauCeti.mahlerMeasure_eq_absMulHeight₁_pow` (Height/Absolute.lean:161), `house_eq_one_iff` (Height/House.lean:296), `IsPisot` (NumberTheory/Pisot/Basic.lean:60) | Same bridges in general form (SInteger.lean:162 gives the converse); Kronecker for the house and for the Mahler measure (Height/MahlerMeasure.lean:157). No Perron-number definition, no `T₂`, no compositum Gram matrix. |
-| leanprover-community/mathlib4 `065356127b1dc0016f66b7283ce0ce2c4055aa55` (the pin) | `NumberField.mulHeight₁_eq` (NumberTheory/Height/NumberField.lean:112), `finite_setOfPred_mulHeight₁_le` (:411), `NumberField.Embeddings.pow_eq_one_of_norm_eq_one` (NumberTheory/NumberField/InfinitePlace/Embeddings.lean:138), `Matrix.PosSemidef.kronecker` (Analysis/Matrix/Order.lean:195) | Definitions and tools used. Non-effective Northcott finiteness only. Unchanged on master at `15cf10d19dfd4cdee9602318e271fa3ce99c454d` for these statements; no Perron or Pisot definition. |
-| stalex444/golden-family-trace-forms `9528df064df58318213b541048e05ff4c0d9cb67` (PALOMAR-2026-09-02-000014) | `TraceForms.traceMatrix_tensorProduct` (compared statement 3 of that entry) | The trace-form Kronecker identity. Statement 1 here is the Hermitian `T₂` analogue; neither is a special case of the other. |
+| leanprover-community/mathlib4 `065356127b1dc0016f66b7283ce0ce2c4055aa55` (the pin) | `NumberField.mulHeight₁_eq` (NumberTheory/Height/NumberField.lean:112), `finite_setOfPred_mulHeight₁_le` (:411), `NumberField.Embeddings.pow_eq_one_of_norm_eq_one` (NumberTheory/NumberField/InfinitePlace/Embeddings.lean:138), `Matrix.PosSemidef.kronecker` (Analysis/Matrix/Order.lean:195) | Definitions and tools used. Non-effective Northcott finiteness only. Unchanged on master at `15cf10d19dfd4cdee9602318e271fa3ce99c454d` for these statements; no Perron or Pisot definition. Mathlib's `Matrix.gram` (Analysis/InnerProductSpace/GramMatrix.lean:40) and `TensorProduct.inner_tmul` (Analysis/InnerProductSpace/TensorProduct.lean:70) give the inner product of pure tensors; Mathlib states no Kronecker identity for Gram matrices and no Gram matrix over number-field embeddings, and the repository uses neither. |
+| stalex444/golden-family-trace-forms `9528df064df58318213b541048e05ff4c0d9cb67` (PALOMAR-2026-09-02-000014) | `TraceForms.traceMatrix_tensorProduct` (compared statement 3 of that entry); `trace_tmul_compositum`, `traceMatrix_compositum`, `discr_compositum` (its statements 18–20) | The trace-form Kronecker identity. The repository's uncompared `HeightT2.t2Gram_compositum` is the Hermitian `T₂` analogue; neither is a special case of the other as stated. Statements 18–20 there are trace-form instances on the same compositum `L`; they are not statements here. |
 
 Also searched, with nothing relevant to the compared statements: openai/math at
 `4eaee87548250b2682affda7d05d947c05554bae` (names over the whole tree; `lean/OAI/NumberTheory` and
 `lean/OAI/RingTheory` grepped); the registry's public index (titles, abstracts and compared
 theorem names); the Isabelle AFP index (`Mahler_Measure` read); Metamath `set.mm`; HOL Light file
 names (`Baker/heights.ml`, `Sieve/perron.ml` opened); MathComp `field/algnum.v`; Mathlib pull
-request titles; google-deepmind/formal-conjectures (file tree scanned for Perron and height files, 2026-11-15). Not searched: the rest of
-GitHub, Lean 3 archives, Coq/Rocq beyond MathComp, AFP theories other than `Mahler_Measure`,
+request titles; google-deepmind/formal-conjectures (file tree scanned for Perron and height files, 2026-11-15; contents searched
+at `6751c0f043985ac6647db28a45a63afdf21acffe` on 2026-11-16: a statement of Lehmer's problem as a
+conjecture, `FormalConjectures/Wikipedia/LehmerMahlerMeasureProblem.lean`, and `IsPisot`,
+`FormalConjecturesForMathlib/NumberTheory/PisotNumber.lean:52`; no Perron number); the archived
+Lean 3 mathlib at `65a1391a0106c9204fe45bc73a039f056558cb83` (no Mahler, Perron or Pisot file).
+Not searched: the rest of GitHub, Coq/Rocq beyond MathComp, AFP theories other than `Mahler_Measure`,
 Naproche, Mizar, Zulip.
 
 ## Relation to the author's other entries
@@ -199,9 +269,11 @@ Naproche, Mizar, Zulip.
   conditional on Smyth's theorem) are about `L`; neither is a statement here.
 - **PALOMAR-2026-09-01-000005** (`stalex444/mahler-minimizer-compositum`). Statement 13 there gives
   that `ρQ` exceeds the modulus of each of its other conjugates (one of the hypotheses of statement
-  5 here); statement 14 the value `M(ρQ)`.
+  3 here); statement 14 the value `M(ρQ)`.
 - **PALOMAR-2026-09-02-000014** (`stalex444/golden-family-trace-forms`). Statement 3 there is the
-  trace-form counterpart of statement 1 here.
+  trace-form counterpart of the repository's uncompared Gram identity `HeightT2.t2Gram_compositum`;
+  its statements 18–20 are trace-form instances on the same compositum `L`. No statement there is a
+  statement here.
 - **PALOMAR-2026-08-31-000004**. The least Mahler measure above `1` of monic irreducible integer
   polynomials of degrees 2–4, degree by degree (in degrees 3 and 4 attained, among others, by
   `x³ − x − 1` and `x⁴ − x − 1`); a different statement.
@@ -210,14 +282,19 @@ Naproche, Mizar, Zulip.
   and `x⁴ − x − 1` in rational boxes and the complex embeddings of `L` (`InflationDimension/Instances.lean`,
   lines 50–235 and 1246–1274, at `c41d9d29f9c86fb0f849df79b03e713d3405a5eb`); the docstring of `RulerSelection/Embeddings.lean` names
   that repository by a local folder name, `cut-project-dimension`. No statement there is a statement here.
+- **PALOMAR-2026-11-02-000018** (`stalex444/arithmetic-of-time-reversible-units-degree-nine`). For a
+  degree-9 compositum of two cubic fields, its statements 3-4 give the nine embeddings as pairs and a
+  3 × 3 Hermitian array of conjugates (place bookkeeping ported from PALOMAR-2026-10-21-000012).
+  The repository's uncompared `HeightT2.t2Gram_compositum` is a `T₂` Gram identity for a general
+  linearly disjoint compositum; no statement there is a statement here.
 
 ## Layout
 
 | Path | What it is |
 |---|---|
-| `Challenge.lean` | The five statements with placeholders, the carried definition block of PALOMAR-2026-10-21-000012 and the three definitions of this entry. Imports Mathlib only. |
+| `Challenge.lean` | The three statements with placeholders, the carried definition block of PALOMAR-2026-10-21-000012 and the definition `HeightT2.IsPerronNumber` of this entry. Imports Mathlib only. |
 | `Solution.lean` | The same statements, each proved by one `exact`; generated from `Challenge.lean` by `scripts/make_solution.py`. |
-| `HeightT2/` | The library written for this entry: `Defs.lean` (the three definitions and their controls), `Bridge.lean`, `Bound.lean` (the inequality), `Equality.lean` (the equality case, not compared), `Compositum.lean` (statements 1, 2), `Instance/` (statements 3–5 and the re-derived box), `Review/` (the statement reviews' compiled probe files), `Probe.lean` (a record of the names used), `Audit.lean` (`#print axioms` for every declaration). |
+| `HeightT2/` | The library written for this entry: `Defs.lean` (the three definitions and their controls), `Bridge.lean`, `Bound.lean` (the inequality), `Equality.lean` (the equality case, not compared), `Compositum.lean` (the uncompared Gram identity and coordinate bound), `Instance/` (statements 1–3 and the re-derived box), `Review/` (the statement reviews' compiled probe files), `Probe.lean` (a record of the names used), `Audit.lean` (`#print axioms` for every declaration). |
 | `RulerSelection/` | The author's earlier kernel-checked development on `L`: the nonzero algebraic integers of height at most that of `ρQ` in the product height (`RulerSelection.LaneC.small_height_iff`) and the units of least Mahler measure; `Embeddings.lean` ports code of PALOMAR-2026-10-22-000030. Copied unchanged except for the docstrings of `Perron.lean` (see below). |
 | `HermiteCompositum/` | Nine of the ten modules of the library of PALOMAR-2026-10-21-000012 (all but `Squarefree.lean`), byte for byte. |
 | `DefinitionAudit.lean`, `MATHLIB_DEFINITIONS.md` | Kernel-checked facts about the definitions, and the pinned Mathlib definitions quoted verbatim (generated by `scripts/gen_mathlib_definitions.py` from `scripts/mathlib_definitions_spec.json`). |
@@ -249,7 +326,7 @@ lake build Axioms
 ```
 
 `lake build` builds the three libraries, `Challenge`, `Solution` and `DefinitionAudit`. The only
-warnings are the five placeholders of `Challenge.lean` and linter warnings in copied modules. Every
+warnings are the three placeholders of `Challenge.lean` and linter warnings in copied modules. Every
 compared statement depends on the axioms `propext`, `Classical.choice`, `Quot.sound` only.
 `BUILD.txt` records the build, the axioms and a local run of the registry's Comparator.
 
@@ -257,8 +334,10 @@ compared statement depends on the axioms `propext`, `Classical.choice`, `Quot.so
 
 Application. In the author's paper *Deriving Gravity from First Principles: The Dimensional
 Origin of Newton's Constant* (Zenodo, doi:[10.5281/zenodo.20417378](https://doi.org/10.5281/zenodo.20417378))
-the product `ρQ` is the common ruler of that paper's Table 2. The paper is cited for context;
-nothing in it is formalized here.
+the product `ρQ` is the common ruler of that paper's Table 2 (the paper's term: it calls `ρQ` "the
+common measure of three- and four-dimensional algebra" and reads each coupling constant as a
+projection of it). The paper is cited for context; nothing in it is formalized here, and no statement
+of this entry depends on it.
 
 ## Authorship, production and licence
 

@@ -1,33 +1,41 @@
 module
 public import Solution
 public import HeightT2.Equality
+public import HeightT2.Compositum
 
 @[expose] public section
 /-!
 # Axioms
 
-`#print axioms` for the five compared statements (as proved in `Solution.lean`), the definitions
+`#print axioms` for the three compared statements (as proved in `Solution.lean`), the definitions
 they use, and a selection of the uncompared supporting theorems and controls named in the README, formalization.yaml and the HeightT2 module docstrings. Build with
 `lake build Axioms`; every line should read `[propext, Classical.choice, Quot.sound]` or a subset.
 The full list for every declaration of the `HeightT2` library is `HeightT2/Audit.lean`.
-`HeightT2.Equality` is imported here, not in `Solution.lean`, for the uncompared equality case
-`HeightT2.sum_norm_sq_eq_mulHeight₁_sq_add_iff` and the theorems and controls of that module.
+`HeightT2.Equality` and `HeightT2.Compositum` are imported here, not in `Solution.lean`, for the
+uncompared equality case `HeightT2.sum_norm_sq_eq_mulHeight₁_sq_add_iff`, the uncompared Gram
+identity `HeightT2.t2Gram_compositum`, the uncompared coordinate bound
+`HeightT2.coord_sq_le_sum_norm_sq`, and the theorems and controls of those modules.
 -/
 
--- the five compared statements
-#print axioms IntegralGeneratorHeights.t2Gram_compositum
-#print axioms IntegralGeneratorHeights.coord_sq_le_sum_norm_sq
+-- the three compared statements
 #print axioms IntegralGeneratorHeights.mulHeight₁_le_mulHeight₁_ρQ_iff
 #print axioms IntegralGeneratorHeights.mahlerMeasure_generator_min
 #print axioms IntegralGeneratorHeights.perronNumber_generator_selection
 -- the definitions the statements use
 #print axioms HeightT2.IsPerronNumber
-#print axioms HeightT2.t2Gram
-#print axioms HeightT2.t2GramRe
 #print axioms HermiteCompositum.Instance.L
 #print axioms HermiteCompositum.Instance.ρ
 #print axioms HermiteCompositum.Instance.Q
--- uncompared supporting theorems and controls (README, formalization.yaml, HeightT2 docstrings)
+-- the definitions of the uncompared Gram identity and coordinate bound
+#print axioms HeightT2.t2Gram
+#print axioms HeightT2.t2GramRe
+-- uncompared supporting theorems and controls (README, formalization.yaml, HeightT2 docstrings):
+-- the Gram identity and the coordinate bound (used by no compared proof), the inequality and its
+-- equality case, and the library lemmas the compared proofs use in their place
+#print axioms HeightT2.t2Gram_compositum
+#print axioms HeightT2.coord_sq_le_sum_norm_sq
+#print axioms RulerSelection.Emb.T2_le_embHeight_sq_add
+#print axioms RulerSelection.Kron.kron_ge_diag
 #print axioms HeightT2.sum_norm_sq_eq_mulHeight₁_sq_add_iff
 #print axioms HeightT2.sum_norm_sq_le_mulHeight₁_sq_add
 #print axioms HeightT2.mulHeight₁_eq_prod_embeddings
